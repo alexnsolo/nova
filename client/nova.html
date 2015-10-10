@@ -16,15 +16,23 @@
         <hr/>
         <div class="join-room">
           <form novalidate ng-submit="joinRoom()">
-            <input type="text" class="form-control" placeholder="Room ID" ng-model="roomId">
-            <button class="btn btn-md btn-primary" type="submit">Join Room</button>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Room ID" ng-model="roomId">
+              <button class="btn btn-md btn-primary" type="submit">Join Room</button>
+            </div>
           </form>
         </div>
       </div>
     </div>
     <div ng-switch-when="room">
       <div class="room container" ng-controller="RoomController">
-        <button class="btn btn-md btn-default" ng-click="leaveRoom()">Leave Room</button>
+        <button class="btn btn-sm btn-default" ng-click="leaveRoom()">Leave Room</button>
+        <h2 ng-bind="currentRoom.name"></h2>
+        <div class="room-canvas">
+          <div class="sprite" ng-repeat="sprite in sprites">
+            
+          </div>
+        </div>
       </div>
     </div>
   </div>

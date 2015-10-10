@@ -1,8 +1,26 @@
 .header {
 	margin-bottom: 20px;
 	padding: 10px;
+	border-bottom: 1px solid gray;
+	background: lighten(#222222, 5%);
+
+	.logo {
+		font-weight: bold;
+		font-size: 25px;
+		display: inline;
+		padding-right: 7px;
+	}
+
+	.slogan {
+		font-size: 12px;
+		display: inline;
+	}
 }
 
 .lobby {
 	width: 300px;
+}
+
+.room {
+	
 }
