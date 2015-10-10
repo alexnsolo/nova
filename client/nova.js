@@ -1,5 +1,10 @@
+$.cloudinary.config().cloud_name = Meteor.settings.public.cloudinary_cloud_name;
+$.cloudinary.config().upload_preset = Meteor.settings.public.cloudinary_upload_preset;
+
 angular.module('nova', [
-  'angular-meteor'
+  'angular-meteor',
+  'cloudinary',
+  'angularFileUpload'
 ]);
 
 angular.module('nova').run(function() {
@@ -54,9 +59,11 @@ angular.module('nova').controller('LobbyController', ['$scope', '$meteor', funct
   };
 }]);
 
-angular.module('nova').controller('RoomController', ['$scope', '$upload', function($scope, $upload) {
+angular.module('nova').controller('RoomController', ['$scope', '$upload', '$meteor', function($scope, $upload, $meteor) {
   $scope.isUploading = false;
   $scope.sprites = [];
+  // $scope.meteorSubscribe('Sprites', $scope.currentRoom._id);
+  // $scope.sprites = $scope.meteorCollection('Sprites');
 
   $scope.leaveRoom = function() {
     $scope.$emit('LEAVE_ROOM');
@@ -84,11 +91,14 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', functi
         imageCode: data.public_id
       };
 
-      $meteor.call('CreateSprite', sprite)
-        .catch(function(error) {
-          window.alert("Error: " + error);
-          console.error(error);
-        });
+      $scope.sprites.push(sprite);
+      console.log(sprite);
+
+      // $meteor.call('CreateSprite', sprite)
+      //   .catch(function(error) {
+      //     window.alert("Error: " + error);
+      //     console.error(error);
+      //   });
     });
   };
 }]);

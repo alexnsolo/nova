@@ -37,7 +37,11 @@
         </button>
         <div class="room-canvas">
           <div class="sprite" ng-repeat="sprite in sprites">
-
+            <cl-image
+                public-id="{{sprite.imageCode}}"
+                format="png"
+                quality="100">
+            </cl-image>
           </div>
         </div>
       </div>
