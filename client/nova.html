@@ -26,11 +26,18 @@
     </div>
     <div ng-switch-when="room">
       <div class="room container" ng-controller="RoomController">
-        <button class="btn btn-sm btn-default" ng-click="leaveRoom()">Leave Room</button>
         <h2 ng-bind="currentRoom.name"></h2>
+        <button class="btn btn-xs btn-default" ng-click="leaveRoom()">Leave Room</button>
+        <button class="btn btn-xs btn-primary"
+            type="button"
+            ng-disabled="isUploading"
+            ng-file-select
+            ng-file-change="uploadImage($files)">
+          Upload Image
+        </button>
         <div class="room-canvas">
           <div class="sprite" ng-repeat="sprite in sprites">
-            
+
           </div>
         </div>
       </div>

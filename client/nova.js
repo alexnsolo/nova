@@ -27,39 +27,68 @@ angular.module('nova').controller('LobbyController', ['$scope', '$meteor', funct
   $scope.createRoom = function() {
     var roomName = window.prompt("Room name:");
     var userName = window.prompt("Your name:");
+    var user = {name: userName};
 
-    $scope.$emit('JOIN_ROOM', {id: 'asdasd1d21dn29', name: roomName, users: [{name: userName}]});
-    return;
-
-    $meteor.call('CreateRoom', roomName, userName)
+    $meteor.call('CreateRoom', roomName, user)
       .then(function(room) {
         $scope.$emit('JOIN_ROOM', room);
       })
       .catch(function(error) {
-        window.alert(error);
+        window.alert("Error: " + error);
         console.error(error);
       });
   };
 
   $scope.joinRoom = function() {
     var userName = window.prompt("Your name:");
+    var user = {name: userName};
 
-    $scope.$emit('JOIN_ROOM', {id: $scope.roomId, users: [{name: userName}]});
-    return;
-
-    $meteor.call('JoinRoom', $scope.roomId, userName)
+    $meteor.call('JoinRoom', $scope.roomId, user)
       .then(function(room) {
         $scope.$emit('JOIN_ROOM', room);
       })
       .catch(function(error) {
-        window.alert(error);
+        window.alert("Error: " + error);
         console.error(error);
       });
   };
 }]);
 
-angular.module('nova').controller('RoomController', ['$scope', function($scope) {
+angular.module('nova').controller('RoomController', ['$scope', '$upload', function($scope, $upload) {
+  $scope.isUploading = false;
+  $scope.sprites = [];
+
   $scope.leaveRoom = function() {
     $scope.$emit('LEAVE_ROOM');
+  };
+
+  $scope.uploadImage = function(files) {
+    if (files.length == 0) {
+      return;
+    }
+
+    $scope.isUploading = true;
+    var upload = $upload.upload({
+      url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
+      file: files[0],
+      fields: {
+        upload_preset: $.cloudinary.config().upload_preset
+      }
+    });
+
+    upload.success(function(data, status, headers, config) {
+      $scope.isUploading = false;
+
+      var sprite = {
+        roomId: $scope.currentRoom._id,
+        imageCode: data.public_id
+      };
+
+      $meteor.call('CreateSprite', sprite)
+        .catch(function(error) {
+          window.alert("Error: " + error);
+          console.error(error);
+        });
+    });
   };
 }]);
