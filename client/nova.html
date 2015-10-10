@@ -3,5 +3,29 @@
 </head>
 
 <body ng-app="nova">
-
+  <div class="header">
+    <div class="logo">Nova</div>
+    <div class="slogan">Collaborative Canvas</div>
+  </div>
+  <div ng-controller="ViewController" ng-switch="viewState">
+    <div ng-switch-when="lobby">
+      <div class="lobby container" ng-controller="LobbyController">
+        <div class="create-room">
+          <button class="btn btn-md btn-success" ng-click="createRoom()">Create Room</button>
+        </div>
+        <hr/>
+        <div class="join-room">
+          <form novalidate ng-submit="joinRoom()">
+            <input type="text" class="form-control" placeholder="Room ID" ng-model="roomId">
+            <button class="btn btn-md btn-primary" type="submit">Join Room</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div ng-switch-when="room">
+      <div class="room container" ng-controller="RoomController">
+        <button class="btn btn-md btn-default" ng-click="leaveRoom()">Leave Room</button>
+      </div>
+    </div>
+  </div>
 </body>
