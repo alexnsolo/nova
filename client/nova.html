@@ -27,6 +27,7 @@
     <div ng-switch-when="room">
       <div class="room container" ng-controller="RoomController">
         <h2 ng-bind="currentRoom.name"></h2>
+        <h5>ID: {{currentRoom._id}}</h5>
         <button class="btn btn-xs btn-default" ng-click="leaveRoom()">Leave Room</button>
         <button class="btn btn-xs btn-primary"
             type="button"
@@ -36,7 +37,7 @@
           Upload Image
         </button>
         <div class="room-canvas">
-          <div class="sprite" ng-repeat="sprite in sprites">
+          <div class="sprite" ng-repeat="sprite in sprites" jqyoui-draggable="{animate:true}">
             <cl-image
                 public-id="{{sprite.imageCode}}"
                 format="png"

@@ -4,7 +4,8 @@ $.cloudinary.config().upload_preset = Meteor.settings.public.cloudinary_upload_p
 angular.module('nova', [
   'angular-meteor',
   'cloudinary',
-  'angularFileUpload'
+  'angularFileUpload',
+  'ngDragDrop'
 ]);
 
 angular.module('nova').run(function() {
@@ -92,7 +93,6 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
       };
 
       $scope.sprites.push(sprite);
-      console.log(sprite);
 
       // $meteor.call('CreateSprite', sprite)
       //   .catch(function(error) {
