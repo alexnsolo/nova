@@ -3,17 +3,23 @@
 </head>
 
 <body ng-app="nova">
-  <div class="header">
-    <div class="logo">Nova</div>
-    <div class="slogan">Collaborative Canvas</div>
-  </div>
   <div ng-controller="ViewController" ng-switch="viewState">
-    <div ng-switch-when="lobby">
+    <div ng-switch-when="lobby" class="container">
+      <div class="intro jumbotron">
+        <h1>Nova</h1>
+        <h2>Collaborative Canvas</h2>
+        <p class="text-muted">
+          Join a room with a friend, then upload images and move them around in realtime. Great for
+          working together on visual layouts, play testing board games, and anything else you can
+          imagine.
+        </p>
+        <img src="/logo.svg" alt="Nova" class="logo">
+      </div>
       <div class="lobby container" ng-controller="LobbyController">
         <div class="create-room">
           <button class="btn btn-md btn-success" ng-click="createRoom()">Create Room</button>
         </div>
-        <hr/>
+        <div class="or">OR</div>
         <div class="join-room">
           <form novalidate ng-submit="joinRoom()">
             <div class="form-group">
@@ -23,8 +29,23 @@
           </form>
         </div>
       </div>
+      <div class="footer">
+        <strong>Made by Alex Solo & David Fry</strong>
+        <div>Meteor Global Distributed Hackathon 2015</div>
+        <div>
+          Powered by <a href="meteor.com">Meteor</a>
+        </div>
+        <div>
+          Code on <a href="https://github.com/civilframe/nova">GitHub</a>
+        </div>
+      </div>
     </div>
     <div ng-switch-when="room">
+      <div class="header">
+        <img src="/logo.svg" alt="Nova" class="logo">
+        <div class="name">Nova</div>
+        <div class="slogan">Collaborative Canvas</div>
+      </div>
       <div class="room" ng-controller="RoomController">
         <div class="room-info">
           <h2 ng-bind="currentRoom.name"></h2>
