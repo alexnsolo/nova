@@ -1,8 +1,52 @@
 .header {
 	margin-bottom: 20px;
 	padding: 10px;
+	border-bottom: 1px solid gray;
+	background: lighten(#222222, 5%);
+
+	.logo {
+		font-weight: bold;
+		font-size: 25px;
+		display: inline;
+		padding-right: 7px;
+	}
+
+	.slogan {
+		font-size: 12px;
+		display: inline;
+	}
 }
 
 .lobby {
 	width: 300px;
+}
+
+.room {
+	position: relative;
+
+	.room-info {
+		position: absolute;
+		top: -20px;
+		right: 50px;
+		z-index: 10;
+	}
+
+	.upload-image-btn {
+		position: fixed;
+		bottom: 20px;
+		left: 20px;
+		font-size: 50px;
+		padding: 15px;
+		line-height: 25px;
+	}
+
+	.room-canvas {
+		position: relative;
+
+		.sprite {
+			position: absolute;
+			z-index: 1;
+			cursor: pointer;
+		}
+	}
 }
