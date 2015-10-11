@@ -43,16 +43,19 @@
           +
         </button>
         <div class="room-canvas">
-          <div class="sprite" ng-repeat="sprite in sprites">
+          <div
+              class="sprite"
+              id="{{sprite._id}}"
+              ng-repeat="sprite in sprites"
+              ng-style="{'top': sprite.yPos, 'left': sprite.xPos}"
+              data-drag="true"
+              jqyoui-draggable="{onStop: 'onSpriteDrop' onStart: 'onSpriteDrag'}">
             <cl-image
-                id="{{sprite._id}}"
-                ng-style="{'top': sprite.y, 'left': sprite.x}"
-                data-drag="true"
-                jqyoui-draggable="{onStop: 'onSpriteDrop'}"
                 public-id="{{sprite.imageCode}}"
                 format="png"
                 quality="100">
             </cl-image>
+            <pre>{{sprite | json}}</pre>
           </div>
         </div>
       </div>

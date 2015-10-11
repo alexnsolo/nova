@@ -15,15 +15,18 @@ angular.module('nova').run(function() {
 angular.module('nova').controller('ViewController', ['$scope', function($scope) {
   $scope.viewState = 'lobby'; // 'room'
   $scope.currentRoom = null;
+  $scope.currentUser = null;
 
-  $scope.$on('JOIN_ROOM', function(event, room) {
+  $scope.$on('JOIN_ROOM', function(event, room, user) {
     $scope.viewState = 'room';
     $scope.currentRoom = room;
+    $scope.currentUser = user;
   });
 
   $scope.$on('LEAVE_ROOM', function(event) {
     $scope.viewState = 'lobby';
     $scope.currentRoom = null;
+    $scope.currentUser = null;
   });
 }]);
 
@@ -37,7 +40,7 @@ angular.module('nova').controller('LobbyController', ['$scope', '$meteor', funct
 
     $meteor.call('CreateRoom', roomName, user)
       .then(function(room) {
-        $scope.$emit('JOIN_ROOM', room);
+        $scope.$emit('JOIN_ROOM', room, user);
       })
       .catch(function(error) {
         window.alert("Error: " + error);
@@ -51,7 +54,7 @@ angular.module('nova').controller('LobbyController', ['$scope', '$meteor', funct
 
     $meteor.call('JoinRoom', $scope.roomId, user)
       .then(function(room) {
-        $scope.$emit('JOIN_ROOM', room);
+        $scope.$emit('JOIN_ROOM', room, user);
       })
       .catch(function(error) {
         window.alert("Error: " + error);
@@ -63,7 +66,7 @@ angular.module('nova').controller('LobbyController', ['$scope', '$meteor', funct
 angular.module('nova').controller('RoomController', ['$scope', '$upload', '$meteor', function($scope, $upload, $meteor) {
   $scope.isUploading = false;
   $scope.sprites = [];
-  // $scope.meteorSubscribe('Sprites', $scope.currentRoom._id);
+  // $scope.meteorSubscribe(Sprites, $scope.currentRoom._id);
   // $scope.sprites = $scope.meteorCollection('Sprites');
 
   $scope.leaveRoom = function() {
@@ -88,32 +91,58 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
       $scope.isUploading = false;
 
       var sprite = {
-        _id: '123c23d2',
         roomId: $scope.currentRoom._id,
         imageCode: data.public_id,
-        x: 100,
-        y: 100,
+        xPos: 100,
+        yPos: 100,
+        state: {name: 'idle', user: null}
       };
 
-      $scope.sprites.push(sprite);
-
-      // $meteor.call('CreateSprite', sprite)
-      //   .catch(function(error) {
-      //     window.alert("Error: " + error);
-      //     console.error(error);
-      //   });
+      $meteor.call('CreateSprite', sprite)
+        .then(function(sprite) {
+          $scope.sprites.push(sprite);
+        })
+        .catch(function(error) {
+          window.alert("Error: " + error);
+          console.error(error);
+        });
     });
 
     $scope.onSpriteDrop = function(event, ui) {
-      var sprite_id = event.target.id;
+      var spriteId = event.target.id;
       var x = ui.offset.left;
       var y = ui.offset.top;
 
-      // $meteor.call('UpdateSpriteCoordinates', sprite_id, x, y)
-      //   .catch(function(error) {
-      //     window.alert("Error: " + error);
-      //     console.error(error);
-      //   });
+      $meteor.call('UpdateSpriteCords', spriteId, x, y)
+        .catch(function(error) {
+          window.alert("Error: " + error);
+          console.error(error);
+        });
+
+      var state = {
+        name: 'idle',
+        user: null
+      };
+
+      $meteor.call('UpdateSpriteState', spriteId, state)
+        .catch(function(error) {
+          window.alert("Error: " + error);
+          console.error(error);
+        });
+    };
+
+    $scope.onSpriteDrag = function(event, ui) {
+      var spriteId = event.target.id;
+      var state = {
+        name: 'dragging',
+        user: $scope.currentUser.name
+      };
+
+      $meteor.call('UpdateSpriteState', spriteId, state)
+        .catch(function(error) {
+          window.alert("Error: " + error);
+          console.error(error);
+        });
     };
   };
 }]);
