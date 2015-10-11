@@ -20,3 +20,4 @@ insecure                # Allow all DB writes from clients (for prototyping)
 fourseven:scss
 planettraining:angular-meteor-platform
 msavin:mongol
+mrt:jquery-ui

@@ -25,20 +25,30 @@
       </div>
     </div>
     <div ng-switch-when="room">
-      <div class="room container" ng-controller="RoomController">
-        <h2 ng-bind="currentRoom.name"></h2>
-        <h5>ID: {{currentRoom._id}}</h5>
-        <button class="btn btn-xs btn-default" ng-click="leaveRoom()">Leave Room</button>
-        <button class="btn btn-xs btn-primary"
+      <div class="room" ng-controller="RoomController">
+        <div class="room-info">
+          <h2 ng-bind="currentRoom.name"></h2>
+          <h5>ID: {{currentRoom._id}}</h5>
+          <div class="users">
+            Participants:
+            <span class="user" ng-repeat="user in currentRoom.users">{{user.name}}</span>
+          </div>
+          <button class="btn btn-xs btn-default" ng-click="leaveRoom()">Leave Room</button>
+        </div>
+        <button class="btn btn-sm btn-primary upload-image-btn"
             type="button"
             ng-disabled="isUploading"
             ng-file-select
             ng-file-change="uploadImage($files)">
-          Upload Image
+          +
         </button>
         <div class="room-canvas">
-          <div class="sprite" ng-repeat="sprite in sprites" jqyoui-draggable="{animate:true}">
+          <div class="sprite" ng-repeat="sprite in sprites">
             <cl-image
+                id="{{sprite._id}}"
+                ng-style="{'top': sprite.y, 'left': sprite.x}"
+                data-drag="true"
+                jqyoui-draggable="{onStop: 'onSpriteDrop'}"
                 public-id="{{sprite.imageCode}}"
                 format="png"
                 quality="100">

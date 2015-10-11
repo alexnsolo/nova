@@ -88,8 +88,11 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
       $scope.isUploading = false;
 
       var sprite = {
+        _id: '123c23d2',
         roomId: $scope.currentRoom._id,
-        imageCode: data.public_id
+        imageCode: data.public_id,
+        x: 100,
+        y: 100,
       };
 
       $scope.sprites.push(sprite);
@@ -100,5 +103,17 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
       //     console.error(error);
       //   });
     });
+
+    $scope.onSpriteDrop = function(event, ui) {
+      var sprite_id = event.target.id;
+      var x = ui.offset.left;
+      var y = ui.offset.top;
+
+      // $meteor.call('UpdateSpriteCoordinates', sprite_id, x, y)
+      //   .catch(function(error) {
+      //     window.alert("Error: " + error);
+      //     console.error(error);
+      //   });
+    };
   };
 }]);
