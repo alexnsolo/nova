@@ -65,7 +65,7 @@ angular.module('nova').controller('LobbyController', ['$scope', '$meteor', funct
 
 angular.module('nova').controller('RoomController', ['$scope', '$upload', '$meteor', function($scope, $upload, $meteor) {
   $scope.isUploading = false;
-  $scope.$meteorSubscribe('SpriteInRoom', $scope.currentRoom._id);
+  $scope.$meteorSubscribe('SpriteInRoom', $scope.currentRoom._id)
   $scope.sprites = $scope.$meteorCollection(Sprites);
 
   $scope.leaveRoom = function() {
@@ -144,6 +144,13 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
     };
 
     $scope.canDragSprite = function(sprite) {
+      if (!sprite) {
+        return false;
+      }
+      if (!sprite.state) {
+        return false;
+      }
+
       if (sprite.state.name === 'dragging') {
         return sprite.state.user == $scope.currentUser.name;
       }
@@ -152,6 +159,13 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
     };
 
     $scope.getSpriteStateMessage = function(sprite) {
+      if (!sprite) {
+        return false;
+      }
+      if (!sprite.state) {
+        return false;
+      }
+
       if (sprite.state.name === 'dragging') {
         return "Dragging by '" + sprite.state.user + "'";
       }
