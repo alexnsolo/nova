@@ -31,15 +31,13 @@ Meteor.methods({
 
 
     },
-    LeaveRoom: function()
+
+    LeaveRoom: function(roomId, user)
     {
-        //TODO: handle a users leaving the room
-        //db.stores.update(
-        //    { },
-        //    { $pull: { fruits: { $in: [ "apples", "oranges" ] }, vegetables: "carrots" } },
-        //    { multi: true }
-        //)
-        console.log(this._id);
+        // TODO: add error checking
+        Rooms.update({_id:roomId}, {$pull: {users: {name:user}}});
+        return user + " Has left the room";
     }
+
 
 });
