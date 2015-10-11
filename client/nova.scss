@@ -95,13 +95,10 @@
 
 		.sprite {
 			position: absolute;
+			top: 0px;
+			left: 0px;
 			z-index: 1;
 			cursor: pointer;
-
-			// img {
-			// 	max-height: 300px;
-			// 	max-width: 300px;
-			// }
 
 			&.disabled {
 				opacity: 0.75;
