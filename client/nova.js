@@ -65,9 +65,8 @@ angular.module('nova').controller('LobbyController', ['$scope', '$meteor', funct
 
 angular.module('nova').controller('RoomController', ['$scope', '$upload', '$meteor', function($scope, $upload, $meteor) {
   $scope.isUploading = false;
-  $scope.sprites = [];
-  // $scope.meteorSubscribe(Sprites, $scope.currentRoom._id);
-  // $scope.sprites = $scope.meteorCollection('Sprites');
+  $scope.$meteorSubscribe('SpriteInRoom', $scope.currentRoom._id);
+  $scope.sprites = $scope.$meteorCollection(Sprites);
 
   $scope.leaveRoom = function() {
     $scope.$emit('LEAVE_ROOM');
@@ -100,7 +99,6 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
 
       $meteor.call('CreateSprite', sprite)
         .then(function(sprite) {
-          $scope.sprites.push(sprite);
         })
         .catch(function(error) {
           window.alert("Error: " + error);
@@ -110,8 +108,8 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
 
     $scope.onSpriteDrop = function(event, ui) {
       var spriteId = event.target.id;
-      var x = ui.offset.left;
-      var y = ui.offset.top;
+      var x = ui.position.left;
+      var y = ui.position.top;
 
       $meteor.call('UpdateSpriteCords', spriteId, x, y)
         .catch(function(error) {
@@ -144,5 +142,21 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
           console.error(error);
         });
     };
+
+    $scope.canDragSprite = function(sprite) {
+      if (sprite.state.name === 'dragging') {
+        return sprite.state.user == $scope.currentUser.name;
+      }
+
+      return true;
+    };
+
+    $scope.getSpriteStateMessage = function(sprite) {
+      if (sprite.state.name === 'dragging') {
+        return "Dragging by '" + sprite.state.user + "'";
+      }
+
+      return '';
+    }
   };
 }]);
