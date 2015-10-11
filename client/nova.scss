@@ -95,16 +95,17 @@
 
 		.sprite {
 			position: absolute;
+			top: 0px;
+			left: 0px;
 			z-index: 1;
 			cursor: pointer;
 
-			// img {
-			// 	max-height: 300px;
-			// 	max-width: 300px;
-			// }
-
 			&.disabled {
 				opacity: 0.75;
+				-webkit-transition: top left 100ms linear;
+				-moz-transition: top left 100ms linear;
+				-o-transition: top left 100ms linear;
+				transition: top left 100ms linear;
 			}
 
 			.sprite-state {

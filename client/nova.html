@@ -71,7 +71,7 @@
               ng-style="{'top': sprite.yPos, 'left': sprite.xPos}"
               data-drag="{{canDragSprite(sprite)}}"
               ng-class="{'disabled': !canDragSprite(sprite)}"
-              jqyoui-draggable="{onStop: 'onSpriteDrop', onStart: 'onSpriteDrag'}">
+              jqyoui-draggable="{onStop: 'onSpriteStop', onStart: 'onSpriteStart', onDrag: 'onSpriteDrag'}">
             <div class="sprite-state">{{getSpriteStateMessage(sprite)}}</div>
             <cl-image
                 public-id="{{sprite.imageCode}}"

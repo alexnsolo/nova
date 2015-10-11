@@ -106,16 +106,22 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
         });
     });
 
-    $scope.onSpriteDrop = function(event, ui) {
+    $scope.onSpriteStart = function(event, ui) {
       var spriteId = event.target.id;
-      var x = ui.position.left;
-      var y = ui.position.top;
+      var state = {
+        name: 'dragging',
+        user: $scope.currentUser.name
+      };
 
-      $meteor.call('UpdateSpriteCords', spriteId, x, y)
+      $meteor.call('UpdateSpriteState', spriteId, state)
         .catch(function(error) {
           window.alert("Error: " + error);
           console.error(error);
         });
+    };
+
+    $scope.onSpriteStop = function(event, ui) {
+      var spriteId = event.target.id;
 
       var state = {
         name: 'idle',
@@ -131,12 +137,10 @@ angular.module('nova').controller('RoomController', ['$scope', '$upload', '$mete
 
     $scope.onSpriteDrag = function(event, ui) {
       var spriteId = event.target.id;
-      var state = {
-        name: 'dragging',
-        user: $scope.currentUser.name
-      };
+      var x = ui.position.left;
+      var y = ui.position.top;
 
-      $meteor.call('UpdateSpriteState', spriteId, state)
+      $meteor.call('UpdateSpriteCords', spriteId, x, y)
         .catch(function(error) {
           window.alert("Error: " + error);
           console.error(error);
