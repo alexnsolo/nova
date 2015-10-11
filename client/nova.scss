@@ -102,10 +102,6 @@
 
 			&.disabled {
 				opacity: 0.75;
-				-webkit-transition: top left 100ms linear;
-				-moz-transition: top left 100ms linear;
-				-o-transition: top left 100ms linear;
-				transition: top left 100ms linear;
 			}
 
 			.sprite-state {
