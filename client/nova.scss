@@ -1,3 +1,49 @@
+.intro {
+	position: relative;
+
+	h1 {
+		margin-top: 0px;
+	}
+
+	p {
+		font-size: 14px;
+		max-width: 400px;
+	}
+
+	.logo {
+		position: absolute;
+		top: 20px;
+		right: 30px;
+		width: 250px;
+		opacity: 0.25;
+	}
+}
+
+.lobby {
+	width: 300px;
+	min-height: 270px;
+	text-align: center;
+	margin-top: 10px;
+
+	.or {
+		margin: 10px 0px;
+	}
+
+	.join-room {
+		width: 300px;
+
+	  .form-group > * {
+			display: inline-block;
+			width: auto;
+		}
+
+		.btn {
+			position: relative;
+			top: -2px;
+		}
+	}
+}
+
 .header {
 	margin-bottom: 20px;
 	padding: 10px;
@@ -5,6 +51,14 @@
 	background: lighten(#222222, 5%);
 
 	.logo {
+		height: 30px;
+		opacity: 0.75;
+		position: relative;
+		top: -5px;
+		left: -3px;
+	}
+
+	.name {
 		font-weight: bold;
 		font-size: 25px;
 		display: inline;
@@ -17,10 +71,54 @@
 	}
 }
 
-.lobby {
-	width: 300px;
+.room {
+	position: relative;
+
+	.room-info {
+		position: absolute;
+		top: -20px;
+		right: 50px;
+		z-index: 10;
+	}
+
+	.upload-image-btn {
+		position: fixed;
+		bottom: 20px;
+		left: 20px;
+		font-size: 50px;
+		padding: 15px;
+		line-height: 25px;
+	}
+
+	.room-canvas {
+		position: relative;
+
+		.sprite {
+			position: absolute;
+			z-index: 1;
+			cursor: pointer;
+
+			// img {
+			// 	max-height: 300px;
+			// 	max-width: 300px;
+			// }
+
+			&.disabled {
+				opacity: 0.75;
+			}
+
+			.sprite-state {
+				position: absolute;
+				top: -15px;
+				left: 0px;
+				right: -100px;
+				font-size: 10px;
+			}
+		}
+	}
 }
 
-.room {
-	
+.footer {
+	font-size: 10px;
+	text-align: center;
 }
