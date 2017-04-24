@@ -7,10 +7,10 @@ Collaborative canvas built for the Meteor Global Distributed Hackathon
 2. Create a settings.json file:
 ```
 {
-	"public": {
-		"cloudinary_cloud_name": "YOUR_CLOUDINARY_CLOUD_NAME", 
-		"cloudinary_upload_preset": "YOUR_CLOUDINARY_UPLOAD_PRESET"
-	}
+  "public": {
+    "cloudinary_cloud_name": "YOUR_CLOUDINARY_CLOUD_NAME", 
+    "cloudinary_upload_preset": "YOUR_CLOUDINARY_UPLOAD_PRESET"
+  }
 }
 ```
 3. Run `meteor --settings settings.config`
